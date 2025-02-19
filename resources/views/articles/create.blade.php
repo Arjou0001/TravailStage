@@ -1,57 +1,163 @@
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-<!-- Affichage des erreurs -->
-@if ($errors->any())
-    <div class="bg-red-500 text-white p-4 rounded-md mb-4">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un article</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body {
+            background: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-field,
+        .textarea-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .textarea-field {
+            height: 150px;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .bg-red {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Créer un article</h1>
+
+        <!-- Affichage des erreurs -->
+        @if ($errors->any())
+            <div class="bg-red">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="error-message">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Formulaire de création d'article -->
+        <form action="{{ route('articles.store') }}" method="POST">
+            @csrf
+
+            <div class="form-group">
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" id="titre" class="input-field @error('titre') border-red-500 @enderror" value="{{ old('titre') }}" required>
+                @error('titre')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="textarea-field @error('description') border-red-500 @enderror" required>{{ old('description') }}</textarea>
+                @error('description')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="context">Contexte</label>
+                <textarea name="context" id="context" class="textarea-field @error('context') border-red-500 @enderror">{{ old('context') }}</textarea>
+                @error('context')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="instruction">Instructions</label>
+                <textarea name="instruction" id="instruction" class="textarea-field @error('instruction') border-red-500 @enderror">{{ old('instruction') }}</textarea>
+                @error('instruction')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit" class="submit-button">Créer l'article</button>
+        </form>
+
+        <a href="{{ route('articles.index') }}" class="back-link">Retour</a>
     </div>
-@endif
 
-<!-- Formulaire de création d'article -->
-<form action="{{ route('articles.store') }}" method="POST" class="bg-white p-6 rounded-md shadow-md text-gray-900">
-    @csrf
-
-    <div class="mb-4">
-        <label for="titre" class="block text-sm font-medium text-gray-700">Titre</label>
-        <input type="text" name="titre" id="titre"
-               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('titre') border-red-500 @enderror"
-               value="{{ old('titre') }}">
-        @error('titre')
-            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div class="mb-4">
-        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-        <textarea name="description" id="description"
-                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
-        @error('description')
-            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div class="mb-4">
-        <label for="context" class="block text-sm font-medium text-gray-700">Contexte</label>
-        <textarea name="context" id="context"
-                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('context') border-red-500 @enderror">{{ old('context') }}</textarea>
-        @error('context')
-            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div class="mb-4">
-        <label for="instruction" class="block text-sm font-medium text-gray-700">Instruction</label>
-        <textarea name="instruction" id="instruction"
-                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('instruction') border-red-500 @enderror">{{ old('instruction') }}</textarea>
-        @error('instruction')
-            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <button type="submit" class="bg-blue-600 hover:bg-slate-950 text-white font-bold py-2 px-4 rounded-md transition-all">
-        Créer l'article
-    </button>
-</form>
+</body>
+</html>

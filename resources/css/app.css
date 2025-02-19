@@ -1,3 +1,261 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.bg-custom {
+    background-image: url('C:\laragon\www\Arjou\public\images\wallhaven-3kwwvy.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+/* Conteneur de la bannière */
+.banner {
+    width: 100%; /* Réduit la largeur */
+    height: 200px; /* Hauteur ajustée */
+    background-image: url('/images/banner.jpg'); /* Image de fond */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin: 20px auto; /* Centre la bannière horizontalement */
+    border-radius: 10px; /* Coins arrondis pour un meilleur rendu */
+    overflow: hidden; /* Pour éviter tout débordement visuel */
+}
+
+/* Effet de flou */
+.banner-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Assombrit légèrement */
+    backdrop-filter: blur(10px); /* Flou */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style du texte */
+.banner-overlay h1 {
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+/* Positionnement du bouton en haut à droite */
+.add-article-btn {
+    position: fixed; /* Pour qu'il reste en place même en scrollant */
+    top: 20px; /* Décalage du haut */
+    right: 20px; /* Décalage de la droite */
+    background-color: #e2e8f0; /* Couleur de fond */
+    color: #f97316; /* Couleur du texte */
+    padding: 12px 20px;
+    border-radius: 70px; /* Pour rendre le bouton plus arrondi */
+    font-size: 12px; /* Taille de la police */
+    font-weight: bold;
+    transition: all 0.3s ease; /* Transition pour un effet plus doux */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre pour l'effet de profondeur */
+}
+
+.add-article-btn:hover {
+    background-color: #fafafa; /* Change de couleur au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
+}
+.carousel-container {
+    position: relative;
+    width: 90%; /* Augmente la largeur */
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); /* Effet flou */
+    border-radius: 15px; /* Arrondi des bords */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.carousel {
+    display: flex;
+    gap: 20px;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 15px;
+}
+
+.carousel-item {
+    min-width: 300px;
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    scroll-snap-align: center;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.article-buttons {
+    display: flex;
+    justify-content: space-between; /* Espacement égal entre les boutons */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Styles des boutons */
+.article-buttons a, .article-buttons button {
+    flex: 1; /* Tous les boutons prennent la même largeur */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Couleurs des boutons */
+.blue { background: rgb(29, 29, 30); }
+.yellow { background: rgb(24, 24, 23); }
+.red { background: rgb(40, 39, 39); }
+
+/* Effet au survol */
+.article-buttons a:hover, .article-buttons button:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+
+/* Flèches de navigation */
+.prev, .next {
+    position: absolute;
+    top: 20%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.prev:hover, .next:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Conteneur des articles */
+.articles-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  /* Espacement entre les articles */
+    justify-content: space-between;
+    padding: 30px 70px;
+}
+
+/* Conteneur individuel pour chaque article */
+.article-item {
+    width: calc(33.33% - 20px);  /* Trois articles par ligne */
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Pour les petits écrans, ajuster la taille des articles */
+@media (max-width: 768px) {
+    .article-item {
+        width: calc(50% - 20px);  /* Deux articles par ligne */
+    }
+}
+
+@media (max-width: 480px) {
+    .article-item {
+        width: 100%;  /* Un article par ligne */
+    }
+}
+
+/* Couleur du bouton Lire */
+.article-buttons a.blue {
+    background-color: #3498db;
+    color: white;
+}
+
+.article-buttons a.blue:hover {
+    background-color: #2980b9;
+}
+
+/* Couleur du bouton Éditer */
+.article-buttons a.yellow {
+    background-color: #f39c12;
+    color: white;
+}
+
+.article-buttons a.yellow:hover {
+    background-color: #e67e22;
+}
+
+/* Couleur du bouton Supprimer */
+.article-buttons button.red {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
+
+.article-buttons button.red:hover {
+    background-color: #c0392b;
+}
+
+/* Style général de la pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Style des liens de pagination */
+.pagination .page-link {
+    padding: 6px 12px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #7fa2ba;
+    border: 1px solid #72808a;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+/* Flèches de pagination */
+.pagination .prev,
+.pagination .next {
+    font-size: 16px; /* Plus petit */
+    padding: 5px 10px;
+    min-width: 30px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
+
+.pagination .page-link:hover {
+    background-color: #752c70;
+    color: white;
+}
+
+/* Active la pagination courante */
+.pagination .page-link.active {
+    background-color: #79265f;
+    color: white;
+    border: 1px solid #811e81;
+}
